@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: cloud-mgmt-service
-          image: cratekube/cloud-mgmt-service:1.0.0
+          image: cratekube/cloud-mgmt-service:latest
           ports:
             - containerPort: 9000
           volumeMounts:
