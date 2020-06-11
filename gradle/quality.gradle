@@ -5,14 +5,27 @@ codenarc {
   configFile = rootProject.file('codenarc.groovy')
 }
 
-tasks.withType(Test) {
-  testLogging {
-    events 'passed', 'skipped', 'failed'
+sourceSets {
+  integration {
+    groovy.srcDir 'src/integration/groovy'
+    compileClasspath += sourceSets.test.compileClasspath
+    runtimeClasspath += sourceSets.test.runtimeClasspath
   }
 }
 
-test {
+task integration(type: Test, group: 'verification') {
+  description = 'Runs integration tests.'
+
+  testClassesDirs = sourceSets.integration.output.classesDirs
+  classpath += sourceSets.integration.runtimeClasspath
+
+}
+
+tasks.withType(Test) {
   useJUnitPlatform()
+  testLogging {
+    events 'passed', 'skipped', 'failed'
+  }
 }
 
 jacocoTestReport {
