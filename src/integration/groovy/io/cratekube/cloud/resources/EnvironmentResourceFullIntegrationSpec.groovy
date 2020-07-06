@@ -142,7 +142,7 @@ class EnvironmentResourceFullIntegrationSpec extends Specification {
 
       attempts++
       log.debug 'Attempt #{} to retrieve updated AWS resources with response: {}', attempts, getEnvResponse
-    } while (attempts < 20 && getEnvResponse.status == PENDING )
+    } while (attempts < 40 && getEnvResponse.status == PENDING )
 
     // Retrieve updated AWS Resources after environment initialization hsa begun
     def updatedEc2Instances = getCrateKubeEc2Instances()
@@ -245,7 +245,7 @@ class EnvironmentResourceFullIntegrationSpec extends Specification {
 
       deleteAttempts++
       log.debug "Attempt #{} to retrieve environment being deleted", deleteAttempts
-    } while (deleteAttempts < 10 && envFound)
+    } while (deleteAttempts < 40 && envFound)
 
     // Retrieve updated AWS Resources after environment initialization has begun
     def updatedEc2Instances = getCrateKubeEc2Instances()
