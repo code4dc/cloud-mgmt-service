@@ -41,13 +41,13 @@ import static spock.util.matcher.HamcrestSupport.expect
 class EnvironmentResourceFullIntegrationSpec extends Specification {
   static final TEST_ENV_NAME = 'test-env'
   static final TEST_BEARER_TOKEN = 'Bearer 6bc6a857-f61e-415b-be0d-aee5a0982164'
-  String containerUrl
-  String containerPort
+  @Shared String containerUrl
+  @Shared String containerPort
+
+  @Shared String awsKeyPairName
+  @Shared String configDir = '/app/config'
 
   @Shared
-  String awsKeyPairName
-  String configDir = '/app/config'
-
   GenericContainer cloudMgmtService = new GenericContainer<>("cratekube/cloud-mgmt-service:latest")
     .withExposedPorts(9000)
     .withFileSystemBind('cratekube-data', configDir)
@@ -58,13 +58,11 @@ class EnvironmentResourceFullIntegrationSpec extends Specification {
                                                           'AWS_KEYPAIR_NAME'     : "auto_integration_test_${UUID.randomUUID()}".toString()
   ])
 
-  @Shared
-  Client client
+  @Shared Client client
 
-  @Shared
-  Ec2Client ec2
+  @Shared Ec2Client ec2
 
-  def setup() {
+  def setupSpec() {
     client = JerseyClientBuilder.createClient(
       new ClientConfig().with {
         property SUPPRESS_HTTP_COMPLIANCE_VALIDATION, 'true'
