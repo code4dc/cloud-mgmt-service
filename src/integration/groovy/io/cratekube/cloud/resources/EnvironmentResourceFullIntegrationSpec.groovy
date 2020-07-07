@@ -50,7 +50,6 @@ class EnvironmentResourceFullIntegrationSpec extends Specification {
   @Shared
   GenericContainer cloudMgmtService = new GenericContainer<>("cratekube/cloud-mgmt-service:latest")
     .withExposedPorts(9000)
-    .withFileSystemBind('cratekube-data', configDir)
     .withImagePullPolicy(new AlwaysPullPolicy()).withEnv(['AWS_ACCESS_KEY_ID'    : "${System.getenv('AWS_ACCESS_KEY_ID')}".toString(),
                                                           'AWS_SECRET_ACCESS_KEY': "${System.getenv('AWS_SECRET_ACCESS_KEY')}".toString(),
                                                           'ADMIN_APIKEY'         : '6bc6a857-f61e-415b-be0d-aee5a0982164',
